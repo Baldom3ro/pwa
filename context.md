@@ -65,4 +65,6 @@
 - **Paso 16**: Soporte web añadido a `Database` (`src/app/services/database.ts`). Usa `localStorage` de respaldo en navegador manteniendo API idéntica a SQLite nativo.
 - **Paso 17**: Vistas completas creadas en Ionic: Tab 1 (listado, filtros, sincronización, eliminar), Tab 2 (formulario crear con foto y fecha), Tab 3 (diagnóstico servidor Laravel, subir pendientes, importar).
 - **Paso 18**: `AppComponent` inicializa base de datos automáticamente al inicio.
+- **Paso 19**: Eliminada carpeta `.git` interna en `pwa-off`. Submódulo corregido y subido correctamente a GitHub.
+
 
