@@ -1,0 +1,119 @@
+.banner-pendientes {
+  margin: 12px 16px;
+  border-radius: 12px;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.banner-text strong {
+  font-size: 0.95rem;
+}
+
+.banner-text p {
+  margin: 2px 0 0 0;
+  font-size: 0.8rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-icon {
+  font-size: 72px;
+  color: var(--ion-color-medium);
+  margin-bottom: 8px;
+}
+
+.empty-state h3 {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.empty-state p {
+  margin: 0 0 16px 0;
+  color: var(--ion-color-medium);
+}
+
+.tarea-card {
+  margin: 12px 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card-image-wrap {
+  width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.tarea-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.tarea-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ion-color-dark);
+}
+
+.sync-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.tarea-fecha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  margin-top: 4px;
+  color: var(--ion-color-medium);
+}
+
+.tarea-desc {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--ion-color-step-700, #444);
+  margin: 0 0 12px 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--ion-color-light-shade, #eee);
+  padding-top: 8px;
+}
+
+.tarea-id {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  font-family: monospace;
+}

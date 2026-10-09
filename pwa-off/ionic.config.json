@@ -1,0 +1,7 @@
+{
+  "name": "pwa-off",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

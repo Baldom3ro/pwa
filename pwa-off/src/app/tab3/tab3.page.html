@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Sincronización
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cargarEstado()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Estado de Conexión -->
+  <ion-card class="status-card">
+    <ion-card-header>
+      <div class="status-header">
+        <ion-card-title>Servidor Laravel</ion-card-title>
+        <ion-badge [color]="conectado ? 'success' : 'danger'" class="connection-badge">
+          <ion-icon [name]="conectado ? 'cloud-done-outline' : 'cloud-offline-outline'"></ion-icon>
+          {{ conectado ? 'Conectado' : 'Desconectado' }}
+        </ion-badge>
+      </div>
+      <ion-card-subtitle>{{ apiUrl }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-button expand="block" fill="outline" size="small" (click)="comprobarConexion()" [disabled]="verificando">
+        <ion-icon slot="start" name="radio-outline"></ion-icon>
+        {{ verificando ? 'Verificando...' : 'Comprobar Conexión' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Métricas Locales -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Almacenamiento Local</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid class="stats-grid">
+        <ion-row>
+          <ion-col size="4" class="stat-box">
+            <span class="stat-num">{{ totalTareas }}</span>
+            <span class="stat-label">Total</span>
+          </ion-col>
+          <ion-col size="4" class="stat-box stat-pending">
+            <span class="stat-num text-warning">{{ pendientesCount }}</span>
+            <span class="stat-label">Offline</span>
+          </ion-col>
+          <ion-col size="4" class="stat-box stat-synced">
+            <span class="stat-num text-success">{{ sincronizadasCount }}</span>
+            <span class="stat-label">Servidor</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Acciones de Sincronización -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Acciones</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="actions-wrapper">
+      <ion-button expand="block" color="success" (click)="sincronizar()" [disabled]="!conectado || pendientesCount === 0">
+        <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+        Subir Pendientes ({{ pendientesCount }})
+      </ion-button>
+
+      <ion-button expand="block" color="secondary" fill="outline" (click)="descargarServidor()" [disabled]="!conectado">
+        <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+        Consultar Servidor
+      </ion-button>
+
+      <ion-button
+        *ngIf="tareasServidor.length > 0"
+        expand="block"
+        color="tertiary"
+        (click)="importarDelServidor()">
+        <ion-icon slot="start" name="arrow-down-circle-outline"></ion-icon>
+        Importar al Dispositivo ({{ tareasServidor.length }})
+      </ion-button>
+
+      <ion-button expand="block" color="danger" fill="clear" (click)="confirmarLimpiarLocal()">
+        <ion-icon slot="start" name="trash-outline"></ion-icon>
+        Vaciar Almacenamiento Local
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

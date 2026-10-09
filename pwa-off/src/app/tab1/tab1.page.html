@@ -1,0 +1,103 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Mis Tareas
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="sincronizar()" id="btn-sync-header">
+        <ion-icon slot="icon-only" name="sync-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [value]="filtroActual" (ionChange)="cambiarFiltro($any($event).detail.value)">
+      <ion-segment-button value="todas">
+        <ion-label>Todas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pendientes">
+        <ion-label>
+          Pendientes
+          <ion-badge color="warning" *ngIf="pendientesCount > 0">{{ pendientesCount }}</ion-badge>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="sincronizadas">
+        <ion-label>Sincronizadas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-bottom">
+  <ion-refresher slot="fixed" (ionRefresh)="refrescar($event)">
+    <ion-refresher-content pullingText="Desliza para actualizar" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Banner de estado pendientes -->
+  <ion-card *ngIf="pendientesCount > 0" color="warning" class="banner-pendientes">
+    <ion-card-content class="banner-content">
+      <div class="banner-text">
+        <strong>{{ pendientesCount }} tarea(s) offline</strong>
+        <p>No sincronizadas con servidor</p>
+      </div>
+      <ion-button fill="solid" color="dark" size="small" (click)="sincronizar()">
+        <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+        Sincronizar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estado vacío -->
+  <div *ngIf="tareas.length === 0 && !cargando" class="empty-state">
+    <ion-icon name="clipboard-outline" class="empty-icon"></ion-icon>
+    <h3>No hay tareas</h3>
+    <p>Agrega una tarea desde la pestaña "Nueva Tarea".</p>
+    <ion-button routerLink="/tabs/tab2" fill="outline" color="primary">
+      <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+      Crear Tarea
+    </ion-button>
+  </div>
+
+  <!-- Lista de tareas -->
+  <ion-list *ngIf="tareas.length > 0" lines="none">
+    <ion-card *ngFor="let tarea of tareas" class="tarea-card">
+      <div class="card-image-wrap" *ngIf="tarea.fotografia">
+        <img [src]="tarea.fotografia" alt="Foto tarea" class="tarea-img" />
+      </div>
+
+      <ion-card-header>
+        <div class="header-row">
+          <ion-card-title class="tarea-title">{{ tarea.titulo }}</ion-card-title>
+          <ion-badge [color]="tarea.sincronizado ? 'success' : 'warning'" class="sync-badge">
+            <ion-icon [name]="tarea.sincronizado ? 'checkmark-done-outline' : 'time-outline'"></ion-icon>
+            {{ tarea.sincronizado ? 'Servidor' : 'Offline' }}
+          </ion-badge>
+        </div>
+        <ion-card-subtitle class="tarea-fecha">
+          <ion-icon name="calendar-outline"></ion-icon> {{ tarea.fecha }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="tarea-desc">{{ tarea.descripcion }}</p>
+
+        <div class="card-footer">
+          <span class="tarea-id" *ngIf="tarea.server_id">ID Servidor: #{{ tarea.server_id }}</span>
+          <span class="tarea-id" *ngIf="!tarea.server_id">ID Local: #{{ tarea.id }}</span>
+
+          <ion-button fill="clear" color="danger" size="small" (click)="confirmarEliminar(tarea)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <!-- Boton flotante crear tarea -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button routerLink="/tabs/tab2" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

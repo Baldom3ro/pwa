@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Nueva Tarea
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card class="form-card">
+    <ion-card-header>
+      <ion-card-title>Detalles de la Tarea</ion-card-title>
+      <ion-card-subtitle>Se guardará primero en local (Offline-first)</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Título -->
+      <ion-item lines="inset" class="form-item">
+        <ion-input
+          label="Título"
+          labelPlacement="floating"
+          [(ngModel)]="titulo"
+          placeholder="Ej: Revisar inventario"
+          maxlength="80"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <!-- Descripción -->
+      <ion-item lines="inset" class="form-item">
+        <ion-textarea
+          label="Descripción"
+          labelPlacement="floating"
+          [(ngModel)]="descripcion"
+          placeholder="Escribe los detalles aquí..."
+          [autoGrow]="true"
+          rows="3"
+          required>
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Fecha -->
+      <ion-item lines="inset" class="form-item">
+        <ion-input
+          type="date"
+          label="Fecha"
+          labelPlacement="floating"
+          [(ngModel)]="fecha">
+        </ion-input>
+      </ion-item>
+
+      <!-- Fotografía -->
+      <div class="photo-section">
+        <label class="photo-label">Fotografía (Opcional)</label>
+        
+        <!-- Botón para subir archivo -->
+        <div class="file-input-wrapper" *ngIf="!fotografia">
+          <input
+            type="file"
+            accept="image/*"
+            id="file-upload"
+            (change)="onSeleccionarArchivo($event)"
+            class="hidden-file-input" />
+          <label for="file-upload" class="upload-box">
+            <ion-icon name="camera-outline" class="upload-icon"></ion-icon>
+            <span>Subir imagen</span>
+          </label>
+        </div>
+
+        <!-- Vista previa de imagen -->
+        <div class="photo-preview-wrap" *ngIf="fotografia">
+          <img [src]="fotografia" alt="Vista previa" class="photo-preview" />
+          <ion-button
+            fill="solid"
+            color="danger"
+            size="small"
+            class="remove-photo-btn"
+            (click)="eliminarFoto()">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Quitar
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Botón Guardar -->
+      <ion-button
+        expand="block"
+        color="primary"
+        size="large"
+        class="save-btn"
+        [disabled]="guardando || !titulo || !descripcion"
+        (click)="guardarTarea()">
+        <ion-icon slot="start" name="save-outline"></ion-icon>
+        {{ guardando ? 'Guardando...' : 'Guardar Tarea' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
